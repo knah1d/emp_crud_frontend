@@ -1,0 +1,98 @@
+<div class="flex justify-center py-10">
+  <div class="w-full max-w-2xl">
+    <p class="text-xl font-bold text-center">Add Employee</p>
+    <form #empForm="ngForm" (ngSubmit)="onSaveEmployee()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="text-center">
+        <!-- Name -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+            Name
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required id="name" name="name" type="text" [(ngModel)]="employeeObject.name" placeholder="Name..." />
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+            Email
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required id="email" name="email" type="text" [(ngModel)]="employeeObject.email" placeholder="Email..." />
+        </div>
+
+        <!-- Job Title -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="jobTitle">
+            Job Title
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required id="jobTitle" name="jobTitle" type="text" [(ngModel)]="employeeObject.jobTitle"
+            placeholder="Job Title..." />
+        </div>
+
+        <!-- Department -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="department">
+            Department
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required id="department" name="department" type="text" [(ngModel)]="employeeObject.department"
+            placeholder="Department..." />
+        </div>
+      </div>
+      <div class="w-full max-w-3xl">
+        <!-- Education Details -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="education">
+            Education Details
+          </label>
+
+          <div *ngFor="let edu of employeeObject.educations; let i = index"
+            class="grid grid-cols-1 sm:grid-cols-5 gap-4 mb-4 items-end max-w-5xl">
+            <div class="w-full">
+              <input name="degree{{ i }}" type="text" [(ngModel)]="edu.degree" placeholder="Degree..." required
+                class="w-full border rounded-md py-2 px-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="w-full">
+              <input name="board{{ i }}" type="text" [(ngModel)]="edu.board" placeholder="Institution..." required
+                class="w-full border rounded-md py-2 px-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="w-full">
+              <input name="result{{ i }}" type="number" [(ngModel)]="edu.result" placeholder="Result..." required
+                class="w-full border rounded-md py-2 px-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="w-full">
+              <input name="passingYear{{ i }}" type="number" [(ngModel)]="edu.passingYear"
+                placeholder="Year of Passing..." required
+                class="w-full border rounded-md py-2 px-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="w-full sm:w-auto">
+              <button type="button" (click)="removeEducation(i)"
+                class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addEducation()"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+          + Add Education
+        </button>
+      </div>
+      <br>
+      <!-- Save Button -->
+      <div class="flex items-center justify-between">
+        <button [disabled]="!empForm.valid"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          (click)="onSaveEmployee()" type="button">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
