@@ -5,6 +5,8 @@ import { Observable, catchError, throwError, map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class EmployeeService {
   private apiUrl = 'http://localhost:8080';
 
@@ -24,11 +26,40 @@ export class EmployeeService {
       );
   }
 
+  getEmployeeById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/employees/${id}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching employee:', error);
+          return throwError(() => new Error('Failed to fetch employee. Please try again.'));
+        })
+      );
+  }
 
   createEmployee(employee: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/employees`, employee, { responseType: 'text' })
   }
 
+  
+  updateEmployee(id: number, employee: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/employees/${id}`, employee, { responseType: 'text' })
+      .pipe(
+      catchError(error => {
+        console.error('Error updating employee:', error);
+        return throwError(() => new Error('Failed to update employee. Please try again.'));
+      })
+      );
+    }
+
+  searchEmployeeByName(name: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/employees/${name}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error searching employee:', error);
+          return throwError(() => new Error('Failed to search employee. Please try again.'));
+        })
+      );
+  }
 
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/employees/${id}`, { responseType: 'text' })

@@ -1,49 +1,91 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Employee } from '../../model/employee';
 import { EmployeeService } from '../../services/employee-service';
-import { Education } from '../../model/education';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-employee-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.css'
 })
 export class EmployeeForm {
-  employeeObject: Employee = new Employee();
+  employeeForm: FormGroup;
   employeeService = inject(EmployeeService);
-  
+  private fb = inject(FormBuilder);
+
+  constructor() {
+    this.employeeForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      jobTitle: ['', [Validators.required]],
+      department: ['', [Validators.required]],
+      educations: this.fb.array([])
+    });
+  }
+
+  get educations(): FormArray {
+    return this.employeeForm.get('educations') as FormArray;
+  }
+
+  createEducationFormGroup(): FormGroup {
+    return this.fb.group({
+      degree: ['', [Validators.required]],
+      board: ['', [Validators.required]],
+      result: ['', [Validators.required]],
+      passingYear: [new Date().getFullYear(), [Validators.required, Validators.min(1950), Validators.max(2030)]]
+    });
+  }
 
   addEducation() {
-    // ensure array exists, then push
-    if (!this.employeeObject.educations) {
-      this.employeeObject.educations = [];
-    }
-    this.employeeObject.educations.push(new Education());
+    this.educations.push(this.createEducationFormGroup());
   }
 
   removeEducation(index: number) {
-    const ed = this.employeeObject.educations;
-    if (!ed || index < 0 || index >= ed.length) return;
-    ed.splice(index, 1);
+    if (index >= 0 && index < this.educations.length) {
+      this.educations.removeAt(index);
+    }
+  }
+
+  resetForm() {
+    this.employeeForm.reset({
+      name: '',
+      email: '',
+      jobTitle: '',
+      department: ''
+    });
+    this.educations.clear();
   }
 
   onSaveEmployee() {
-    const newEmployee: Employee = { ...this.employeeObject };
-    delete newEmployee.empId;
+    if (this.employeeForm.invalid) {
+      this.employeeForm.markAllAsTouched();
+      alert('Please fill in all required fields correctly');
+      return;
+    }
+
+    const formValue = this.employeeForm.value;
+    const newEmployee: Employee = {
+      name: formValue.name,
+      email: formValue.email,
+      jobTitle: formValue.jobTitle,
+      department: formValue.department,
+      educations: formValue.educations
+    };
+
     this.employeeService.createEmployee(newEmployee).subscribe({
       next: (employee) => {
-        alert('Employee created successfully: ');
+        alert('Employee created successfully');
         console.log(employee);
-        this.employeeObject = new Employee(); // Reset the form
-      }, error: (error) => {
+        this.resetForm();
+      }, 
+      error: (error) => {
         alert('Error creating employee: ' + error);
       }
     });
   }
-
 }
