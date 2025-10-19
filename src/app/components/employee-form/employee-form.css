@@ -1,43 +1,103 @@
-/* Material Form Field Prefix Icon Styling */
-::ng-deep .mat-mdc-form-field {
-  width: 100%;
+::ng-deep .institution-field .mdc-floating-label {
+  left: 100px !important; 
 }
 
-::ng-deep .mat-mdc-form-field-icon-prefix {
-  padding-right: 12px;
-  color: rgba(0, 0, 0, 0.54);
+::ng-deep .institution-field .mdc-floating-label--float-above {
+  left: 0px !important;
 }
 
-::ng-deep .mat-mdc-form-field-icon-prefix .mat-icon {
-  padding: 0;
-  margin-right: 8px;
+::ng-deep .institution-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 70px !important;
 }
 
-/* Remove the divider line between icon and input */
-::ng-deep .mat-mdc-form-field-icon-prefix::after {
-  display: none !important;
+::ng-deep .department-field .mdc-floating-label {
+  left: 60px !important; /* adjust distance from icon */
 }
 
-::ng-deep .mat-mdc-text-field-wrapper {
-  padding-left: 0 !important;
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .department-field .mdc-floating-label--float-above {
+  left: 0px !important;
 }
 
-/* Card styling */
-mat-card {
-  margin-bottom: 1rem;
+::ng-deep .department-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 40px !important;
 }
 
-mat-card-header {
-  margin-bottom: 1rem;
+::ng-deep .result-field .mdc-floating-label {
+  left: 65px !important; /* adjust distance from icon */
 }
 
-/* Button spacing */
-.mat-mdc-raised-button {
-  margin-right: 0.5rem;
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .result-field .mdc-floating-label--float-above {
+  left: 0px !important;
 }
 
-/* Toolbar styling */
-mat-toolbar {
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
+::ng-deep .result-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 45px !important;
+}
+
+::ng-deep .jobTitle-field .mdc-floating-label {
+  left: 40px !important; /* adjust distance from icon */
+}
+
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .jobTitle-field .mdc-floating-label--float-above {
+  left: 0px !important;
+}
+
+::ng-deep .jobTitle-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 25px !important;
+}
+
+::ng-deep .email-field .mdc-floating-label {
+  left: 20px !important; /* adjust distance from icon */
+}
+
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .email-field .mdc-floating-label--float-above {
+  left: 0px !important;
+}
+
+::ng-deep .email-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 15px !important;
+}
+
+::ng-deep .name-field .mdc-floating-label {
+  left: 20px !important; /* adjust distance from icon */
+}
+
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .name-field .mdc-floating-label--float-above {
+  left: 0px !important;
+}
+
+::ng-deep .name-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 15px !important;
+}
+
+::ng-deep .degree-field .mdc-floating-label {
+  left: 20px !important; /* adjust distance from icon */
+}
+
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .degree-field .mdc-floating-label--float-above {
+  left: 0px !important;
+}
+
+::ng-deep .degree-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 25px !important;
+}
+
+
+::ng-deep .passingYear-field .mdc-floating-label {
+  left: 40px !important; /* adjust distance from icon */
+}
+
+/* When label floats (focus/typing), reset to normal */
+::ng-deep .passingYear-field .mdc-floating-label--float-above {
+  left: 0px !important;
+}
+
+::ng-deep .passingYear-field .mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 20px 60px !important;
 }

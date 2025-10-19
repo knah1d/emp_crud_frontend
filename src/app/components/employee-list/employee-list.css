@@ -1,33 +1,13 @@
-::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
-  display: none;
-}
-
 ::ng-deep .search-field {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+    background: rgba(255, 255, 255, 0.278);
+    border-radius: 10px;
 }
 
-::ng-deep .search-field .mat-mdc-text-field-wrapper {
-  padding-bottom: 0;
+::ng-deep .search-field .mat-mdc-form-field-infix {
+  padding-left: 0px !important; /* lower value = move text left */
 }
 
-::ng-deep .search-field .mdc-text-field {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-table {
-  width: 100%;
-}
-
-th.mat-header-cell {
-  font-weight: 600;
-  font-size: 14px;
-  color: #424242;
-}
 
 .mat-mdc-chip {
-  font-size: 11px;
-  min-height: 24px;
-  padding: 4px 8px;
+    padding: 30px 8px;
 }
