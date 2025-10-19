@@ -3,12 +3,16 @@
     <!-- Header -->
     <div
       class="sticky top-0 w-full bg-gray-500 flex flex-col md:flex-row justify-between items-start md:items-center px-5 gap-4">
-      <h2 class="text-xl font-semibold text-[#2d2d2d]">Employee Form</h2>
+      <h2 class="text-xl font-semibold text-[#2d2d2d]">{{ isEditMode ? 'Update Employee' : 'Employee Form' }}</h2>
       <div class="flex gap-4 flex-wrap">
-        <button type="button"
+        <button *ngIf="!isEditMode" type="button"
           class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2d2d2d] text-white rounded-md text-sm font-medium hover:bg-[#1a1a1a] transition-all">
           <span class="text-base">←</span>
           <a routerLink="/list">Back List</a>
+        </button>
+        <button *ngIf="isEditMode" type="button" (click)="onCancel()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-600 text-white rounded-md text-sm font-medium hover:bg-gray-700 transition-all">
+          <span class="text-base">✕</span> Cancel
         </button>
         <button type="button" (click)="resetForm()"
           class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#c44536] text-white rounded-md text-sm font-medium hover:bg-[#a83628] transition-all">
@@ -16,7 +20,7 @@
         </button>
         <button type="button" [disabled]="!employeeForm.valid" (click)="onSaveEmployee()"
           class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#4a90a4] text-white rounded-md text-sm font-medium hover:bg-[#3a7a8a] transition-all disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-60">
-          <span class="text-base">💾</span> Save
+          <span class="text-base">💾</span> {{ isEditMode ? 'Update' : 'Save' }}
         </button>
       </div>
     </div>
