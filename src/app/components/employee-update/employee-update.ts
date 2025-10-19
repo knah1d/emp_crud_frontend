@@ -67,7 +67,6 @@ export class EmployeeUpdate implements OnInit {
           department: data.department
         });
 
-        // Clear existing educations and populate with fetched data
         this.educations.clear();
         if (data.educations && data.educations.length > 0) {
           data.educations.forEach((edu: Education) => {
@@ -94,9 +93,13 @@ export class EmployeeUpdate implements OnInit {
   }
 
   resetForm() {
-    if (this.employeeId) {
-      this.loadEmployeeData(this.employeeId);
-    }
+    this.employeeForm.reset({
+      name: '',
+      email: '',
+      jobTitle: '',
+      department: ''
+    });
+    this.educations.clear();
   }
 
   onUpdateEmployee(): void {

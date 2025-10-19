@@ -78,13 +78,13 @@ export class EmployeeForm {
     };
 
     this.employeeService.createEmployee(newEmployee).subscribe({
-      next: (employee) => {
-        alert('Employee created successfully');
-        console.log(employee);
+      next: (response) => {
+        const msg = response?.message || 'Employee created successfully';
+        alert(msg);
         this.resetForm();
-      }, 
-      error: (error) => {
-        alert('Error creating employee: ' + error);
+      },
+      error: (err: Error) => {
+        alert('Error creating employee: ' + err.message);
       }
     });
   }

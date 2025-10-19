@@ -82,8 +82,10 @@
                 <td class="p-4 py-5">
                     <p class="text-sm text-slate-500">{{ employee.jobTitle }}</p>
                 </td>
-                <td *ngFor="let edu of employee.educations" class="p-4 py-5">
-                    <p class="text-sm text-slate-500">{{ edu.degree }} - {{ edu.board }} ({{ edu.passingYear }})</p>
+                <td class="p-4 py-5">
+                    <div *ngFor="let edu of employee.educations">
+                        <p class="text-sm text-slate-500">{{ edu.degree }} - {{ edu.board }} ({{ edu.passingYear }})</p>
+                    </div>
                 </td>
                 <td>
                     <button

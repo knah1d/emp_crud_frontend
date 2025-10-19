@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError, map } from 'rxjs';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class EmployeeService {
           console.log("Request completed successfully");
           return response;
         }),
-        catchError(error => { 
+        catchError(error => {
           console.error('Error fetching employees:', error);
           return throwError(() => new Error('Failed to fetch employees. Please try again.'));
         })
@@ -37,19 +37,23 @@ export class EmployeeService {
   }
 
   createEmployee(employee: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/employees`, employee, { responseType: 'text' })
+    return this.http.post(`${this.apiUrl}/employees`, employee).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 409) return throwError(() => new Error('Email already exists'));
+        return throwError(() => new Error('Something went wrong. Please try again.'));
+      })
+    );
   }
 
-  
   updateEmployee(id: number, employee: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/employees/${id}`, employee, { responseType: 'text' })
       .pipe(
-      catchError(error => {
-        console.error('Error updating employee:', error);
-        return throwError(() => new Error('Failed to update employee. Please try again.'));
-      })
+        catchError(error => {
+          console.error('Error updating employee:', error);
+          return throwError(() => new Error('Failed to update employee. Please try again.'));
+        })
       );
-    }
+  }
 
   searchEmployeeByName(name: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/employees/${name}`)
