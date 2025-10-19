@@ -1,147 +1,152 @@
 <div class="bg-white min-h-screen p-5">
   <div class="max-w-[1400px] mx-auto">
-    <!-- Header -->
-    <div
-      class="sticky top-0 w-full bg-gray-500 flex flex-col md:flex-row justify-between items-start md:items-center px-5 gap-4">
-      <h2 class="text-xl font-semibold text-[#2d2d2d]">{{ isEditMode ? 'Update Employee' : 'Employee Form' }}</h2>
-      <div class="flex gap-4 flex-wrap">
-        <button *ngIf="!isEditMode" type="button"
-          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2d2d2d] text-white rounded-md text-sm font-medium hover:bg-[#1a1a1a] transition-all">
-          <span class="text-base">←</span>
-          <a routerLink="/list">Back List</a>
+    <!-- Header with Material Toolbar -->
+    <mat-toolbar color="primary" class="mb-6 rounded">
+      <span class="flex-1">{{ isEditMode ? 'Update Employee' : 'Employee Form' }}</span>
+      <div class="flex gap-2">
+        <button *ngIf="!isEditMode" mat-raised-button routerLink="/list">
+          <mat-icon>arrow_back</mat-icon>
+          Back List
         </button>
-        <button *ngIf="isEditMode" type="button" (click)="onCancel()"
-          class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-600 text-white rounded-md text-sm font-medium hover:bg-gray-700 transition-all">
-          <span class="text-base">✕</span> Cancel
+        <button *ngIf="isEditMode" mat-raised-button (click)="onCancel()">
+          <mat-icon>close</mat-icon>
+          Cancel
         </button>
-        <button type="button" (click)="resetForm()"
-          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#c44536] text-white rounded-md text-sm font-medium hover:bg-[#a83628] transition-all">
-          <span class="text-base">↻</span> Reset
+        <button mat-raised-button color="warn" type="button" (click)="resetForm()">
+          <mat-icon>refresh</mat-icon>
+          Reset
         </button>
-        <button type="button" [disabled]="!employeeForm.valid" (click)="onSaveEmployee()"
-          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#4a90a4] text-white rounded-md text-sm font-medium hover:bg-[#3a7a8a] transition-all disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-60">
-          <span class="text-base">💾</span> {{ isEditMode ? 'Update' : 'Save' }}
+        <button mat-raised-button color="accent" type="button" [disabled]="!employeeForm.valid" (click)="onSaveEmployee()">
+          <mat-icon>save</mat-icon>
+          {{ isEditMode ? 'Update' : 'Save' }}
         </button>
       </div>
-    </div>
+    </mat-toolbar>
 
     <form [formGroup]="employeeForm" (ngSubmit)="onSaveEmployee()">
-      <!-- Employee Information Section -->
-      <div class="bg-gray-100 p-4 mb-8 rounded">
-        <div class="flex justify-between items-center text-[15px] font-semibold text-[#2d2d2d]">
-          <span>Employee Information</span>
-        </div>
-      </div>
+      <!-- Employee Information Card -->
+      <mat-card class="mb-4">
+        <mat-card-header>
+          <mat-card-title>Employee Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+            <!-- Left Column -->
+            <div class="flex flex-col gap-4">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Name</mat-label>
+                <mat-icon matIconPrefix>person</mat-icon>
+                <input matInput formControlName="name" placeholder="Enter employee name" required />
+                <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
+                  Name is required
+                </mat-error>
+              </mat-form-field>
 
-      <!-- Main Form Fields -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-8 px-5">
-        <!-- Left Column -->
-        <div class="flex flex-col gap-5">
-
-
-          <div class="flex flex-col gap-2">
-            <label for="name" class="text-sm font-medium text-[#2d2d2d]">Name <span
-                class="text-[#c44536]">*</span></label>
-            <input id="name" formControlName="name" type="text"
-              class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-400"
-              placeholder="Enter employee name" />
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <label for="email" class="text-sm font-medium text-[#2d2d2d]">Email <span
-                class="text-[#c44536]">*</span></label>
-            <input id="email" formControlName="email" type="email"
-              class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-400"
-              placeholder="Enter email address" />
-          </div>
-        </div>
-
-        <!-- Right Column -->
-        <div class="flex flex-col gap-5">
-          <div class="flex flex-col gap-2">
-            <label for="jobTitle" class="text-sm font-medium text-[#2d2d2d]">Job Title <span
-                class="text-[#c44536]">*</span></label>
-            <input id="jobTitle" formControlName="jobTitle" type="text"
-              class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-400"
-              placeholder="Enter job title" />
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <label for="department" class="text-sm font-medium text-[#2d2d2d]">Department <span
-                class="text-[#c44536]">*</span></label>
-            <input id="department" formControlName="department" type="text"
-              class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-400"
-              placeholder="Enter department" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Education Details Section -->
-      <div class="px-5 pt-8 mt-8 border-t border-gray-300">
-        <h3 class="text-base font-semibold text-[#2d2d2d] mb-5">Education Details</h3>
-
-        <div *ngIf="educations.length === 0"
-          class="mb-4 text-sm text-gray-600">
-          No education records added yet. Click "Add Education" to add one.
-        </div>
-
-        <div formArrayName="educations">
-        <div *ngFor="let eduGroup of educations.controls; let i = index" [formGroupName]="i"
-          class="mb-6 p-4 bg-gray-50 rounded border border-gray-200">
-          <div class="flex justify-between items-center mb-3">
-            <h4 class="text-sm font-semibold text-[#2d2d2d]">Education Record #{{ i + 1 }}</h4>
-            <button type="button" (click)="removeEducation(i)"
-              class="px-4 py-1.5 bg-[#c44536] text-white rounded text-xs font-medium hover:bg-[#a83628] transition-all">
-              Remove
-            </button>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex flex-col gap-2">
-              <label class="text-sm font-medium text-[#2d2d2d]">Degree <span class="text-[#c44536]">*</span></label>
-              <select formControlName="degree"
-                class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all">
-                <option value="" disabled>Select Degree</option>
-                <option value="Bachelor of Science">Bachelor of Science</option>
-                <option value="Bachelor of Arts">Bachelor of Arts</option>
-                <option value="Master of Science">Master of Science</option>
-                <option value="Master of Arts">Master of Arts</option>
-                <option value="HSC">HSC</option>
-                <option value="SSC">SSC</option>
-              </select>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Email</mat-label>
+                <mat-icon matIconPrefix>email</mat-icon>
+                <input matInput formControlName="email" type="email" placeholder="Enter email address" required />
+                <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+                  Email is required
+                </mat-error>
+                <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+                  Please enter a valid email
+                </mat-error>
+              </mat-form-field>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label class="text-sm font-medium text-[#2d2d2d]">Institution/Board <span
-                  class="text-[#c44536]">*</span></label>
-              <input formControlName="board" type="text" placeholder="e.g., University of XYZ"
-                class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
-            </div>
+            <!-- Right Column -->
+            <div class="flex flex-col gap-4">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Job Title</mat-label>
+                <mat-icon matIconPrefix>work</mat-icon>
+                <input matInput formControlName="jobTitle" placeholder="Enter job title" required />
+                <mat-error *ngIf="employeeForm.get('jobTitle')?.hasError('required')">
+                  Job Title is required
+                </mat-error>
+              </mat-form-field>
 
-            <div class="flex flex-col gap-2">
-              <label class="text-sm font-medium text-[#2d2d2d]">Result/Grade <span
-                  class="text-[#c44536]">*</span></label>
-              <input formControlName="result" type="text"
-                placeholder="e.g., 3.8 GPA or First Class"
-                class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
-            </div>
-
-            <div class="flex flex-col gap-2">
-              <label class="text-sm font-medium text-[#2d2d2d]">Year of Passing <span
-                  class="text-[#c44536]">*</span></label>
-              <input formControlName="passingYear" type="number" placeholder="e.g., 2020"
-                min="1950" max="2030"
-                class="px-3 py-2.5 border border-gray-300 rounded bg-white text-sm text-[#2d2d2d] outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Department</mat-label>
+                <mat-icon matIconPrefix>business</mat-icon>
+                <input matInput formControlName="department" placeholder="Enter department" required />
+                <mat-error *ngIf="employeeForm.get('department')?.hasError('required')">
+                  Department is required
+                </mat-error>
+              </mat-form-field>
             </div>
           </div>
-        </div>
-        </div>
+        </mat-card-content>
+      </mat-card>
 
-        <button type="button" (click)="addEducation()"
-          class="px-5 py-2.5 bg-[#4a90a4] text-white rounded text-sm font-medium hover:bg-[#3a7a8a] transition-all">
-          + Add Education
-        </button>
-      </div>
+      <!-- Education Details Card -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Education Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="educations.length === 0" class="mb-4 text-gray-600">
+            <mat-icon class="align-middle">info</mat-icon>
+            No education records added yet. Click "Add Education" to add one.
+          </div>
+
+          <div formArrayName="educations">
+            <mat-card *ngFor="let eduGroup of educations.controls; let i = index" [formGroupName]="i" class="mb-4">
+              <mat-card-header>
+                <mat-card-title class="text-base">Education Record #{{ i + 1 }}</mat-card-title>
+                <button mat-mini-fab color="warn" type="button" (click)="removeEducation(i)" class="ml-auto">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Degree</mat-label>
+                    <mat-icon matIconPrefix>school</mat-icon>
+                    <mat-select formControlName="degree" required>
+                      <mat-option value="">Select Degree</mat-option>
+                      <mat-option value="Bachelor of Science">Bachelor of Science</mat-option>
+                      <mat-option value="Bachelor of Arts">Bachelor of Arts</mat-option>
+                      <mat-option value="Master of Science">Master of Science</mat-option>
+                      <mat-option value="Master of Arts">Master of Arts</mat-option>
+                      <mat-option value="HSC">HSC</mat-option>
+                      <mat-option value="SSC">SSC</mat-option>
+                    </mat-select>
+                    <mat-error>Degree is required</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Institution/Board</mat-label>
+                    <mat-icon matIconPrefix>account_balance</mat-icon>
+                    <input matInput formControlName="board" placeholder="e.g., University of XYZ" required />
+                    <mat-error>Institution/Board is required</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Result/Grade</mat-label>
+                    <mat-icon matIconPrefix>grade</mat-icon>
+                    <input matInput formControlName="result" placeholder="e.g., 3.8 GPA or First Class" required />
+                    <mat-error>Result/Grade is required</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Year of Passing</mat-label>
+                    <mat-icon matIconPrefix>calendar_today</mat-icon>
+                    <input matInput formControlName="passingYear" type="number" placeholder="e.g., 2020" required 
+                           min="1950" max="2030" />
+                    <mat-error>Year of Passing is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <button mat-raised-button color="primary" type="button" (click)="addEducation()">
+            <mat-icon>add</mat-icon>
+            Add Education
+          </button>
+        </mat-card-content>
+      </mat-card>
     </form>
   </div>
 </div>

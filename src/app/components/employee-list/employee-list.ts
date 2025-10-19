@@ -6,9 +6,33 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
+// Angular Material Imports
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @Component({
   selector: 'app-employee-list',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [
+    FormsModule, 
+    CommonModule, 
+    RouterLink,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatChipsModule,
+    MatTooltipModule
+  ],
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.css'
 })
@@ -16,6 +40,7 @@ export class EmployeeList implements OnInit {
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   searchTerm: string = '';
+  displayedColumns: string[] = ['id', 'name', 'email', 'jobTitle', 'department', 'education', 'actions'];
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
 
@@ -49,7 +74,7 @@ export class EmployeeList implements OnInit {
 
   navigateToEdit(id: number | undefined): void {
     if (id === undefined) {
-      alert("Invalid employee ID");
+      alert("Invalid employee. Cannot edit employee.");
       return;
     }
     this.router.navigate(['/edit', id]);

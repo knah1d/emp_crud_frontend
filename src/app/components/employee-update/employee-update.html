@@ -1,10 +1,6 @@
-<div class="bg-white min-h-screen p-5">
-  <div class="max-w-[1400px] mx-auto">
-    <app-employee-form 
-      [employee]="employee" 
-      [isEditMode]="true"
-      (saveEmployee)="onUpdateEmployee($event)"
-      (cancelEdit)="onCancelEdit()">
-    </app-employee-form>
-  </div>
-</div>
+<app-employee-form 
+    [employee]="employee" 
+    [isEditMode]="true"
+    (saveEmployee)="onUpdateEmployee($event)"
+    (cancelEdit)="onCancelEdit()">
+</app-employee-form>
