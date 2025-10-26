@@ -6,7 +6,6 @@
       <!-- <mat-label>Search</mat-label> -->
       <input matInput 
              [(ngModel)]="searchTerm"
-             (ngModelChange)="onSearchEmployee()"
              (keyup.enter)="onSearchEmployee()"
              placeholder="Search">
       <mat-icon matPrefix>search</mat-icon>
