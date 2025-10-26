@@ -96,5 +96,11 @@
         <p class="text-gray-500 mt-2">No employees found</p>
       </div>
     </mat-card-content>
+    <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
+
   </mat-card>
 </div>

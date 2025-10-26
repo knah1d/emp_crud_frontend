@@ -12,6 +12,5 @@ body {
 
 .mat-mdc-form-field-icon-prefix {
     padding: 0 12px 0 10px !important;
-    color: rgba(0, 0, 0, 0.839) !important;
+    color: rgb(0, 0, 0) !important;
 }
-
